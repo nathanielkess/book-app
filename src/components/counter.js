@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
+import Button from './button';
 
 const Counter = ({ count, onIncrement, onDecrement }) =>
   <div className="Loading">
     <p>the count is { count }.</p>
-    <button onClick={onIncrement}>Up</button>
-    <button onClick={onDecrement}>Down</button>
+    <Button onClick={onIncrement}>Up</Button>
+    <Button onClick={onDecrement}>Down</Button>
   </div>;
 
 Counter.propTypes = {
