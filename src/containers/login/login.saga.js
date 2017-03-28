@@ -1,5 +1,9 @@
 import { call, takeLatest } from 'redux-saga/effects';
 import LOGIN from './login.types';
+import { auth, googleAuthProvider, database } from '../../api/firebase';
+
+
+const userRef = database.ref('users');
 
 
 function *watchForGoogleLoginAttempt() {
@@ -9,7 +13,8 @@ function *watchForGoogleLoginAttempt() {
       return type === LOGIN.ATTEMPTING && authType === 'google';
     },
     function* login() {
-      yield console.log('go login via firebase');
+      const user = yield auth.signInWithPopup(googleAuthProvider);
+      yield console.log(auth.currentUser);
     },
   );
 }
