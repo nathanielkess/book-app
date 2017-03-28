@@ -1,3 +1,5 @@
+import { startLoginWatchers } from './containers/login/login.saga';
+
 export function * helloSaga() {
   yield 'hello saga';
 }
@@ -5,5 +7,6 @@ export function * helloSaga() {
 export default function * rootSaga() {
   yield [
     helloSaga(),
+    startLoginWatchers(),
   ];
 }

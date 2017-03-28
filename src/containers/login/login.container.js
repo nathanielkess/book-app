@@ -1,6 +1,17 @@
 import { connect } from 'react-redux';
-import counter from '../../components/counter';
-import mapStateToProps from './counter.selector';
-import * as mapDispatchToProps from './counter.actions';
+import { compose, withProps } from 'recompose';
+import signIn from '../../components/signIn';
+// import mapStateToProps from '../counter/counter.selector';
+import * as mapDispatchToProps from './login.actions';
+import store from '../../store';
 
-export default connect(mapStateToProps, mapDispatchToProps)(counter);
+const { onLoginAttempt } = mapDispatchToProps;
+
+export default compose(
+  connect(null, mapDispatchToProps),
+  withProps(props => ({
+    ...props,
+    onGoogleAuth: () => { store.dispatch(onLoginAttempt('google')); },
+    // onFacebookAuth: () => { store.dispatch(onLoginAttempt('facebook')); },
+  })),
+)(signIn);

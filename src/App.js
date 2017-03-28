@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Counter from './containers/counter/counter.container';
+import Login from './containers/login/login.container';
 
 const App = () =>
   <div className="App">
@@ -10,6 +11,8 @@ const App = () =>
       <h2>Welcome to React</h2>
     </div>
     <Counter />
+    <Login />
+    <br />
   </div>;
 
 export default App;
