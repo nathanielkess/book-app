@@ -20,6 +20,7 @@ function *watchForGoogleLoginAttempt() {
     function* login() {
       try {
         const signedInUser = yield* api.signInWithGoogle();
+        // TODO: handle user failing to login
         const user = transformUser(signedInUser.user);
         yield api.addUser(user);
         yield put(onLoginSuccess(user));
