@@ -54,6 +54,7 @@
     "afterAll": true,
     "afterEach": true,
     "test": true,
-    "jasmine": true
+    "jasmine": true,
+    "window": true,
   }
 }

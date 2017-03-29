@@ -1,7 +1,8 @@
 import { prefixActionTypes } from '../../utils/action-helper';
 
-const LOGIN = prefixActionTypes('LOGIN', [
+const AUTH = prefixActionTypes('AUTH', [
   'ATTEMPTING',
+  'SUCCEEDED',
 ]);
 
-export default LOGIN;
+export default AUTH;

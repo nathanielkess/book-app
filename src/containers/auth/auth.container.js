@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { compose, withProps } from 'recompose';
 import signIn from '../../components/signIn';
 // import mapStateToProps from '../counter/counter.selector';
-import * as mapDispatchToProps from './login.actions';
+import * as mapDispatchToProps from './auth.actions';
 import store from '../../store';
 
 const { onLoginAttempt } = mapDispatchToProps;
