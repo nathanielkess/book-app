@@ -1,3 +1,4 @@
+import AUTH from './auth.types';
 
 const initialState = {
   status: 'ANONYMOUS',
@@ -8,5 +9,14 @@ const initialState = {
 };
 
 export default(state = initialState, { type, payload }) => {
-  return state;
+  switch (type) {
+    case AUTH.SUCCEEDED :
+      return {
+        ...state,
+        ...payload.user,
+        status: 'SIGNED_IN',
+      };
+    default:
+      return state;
+  }
 };

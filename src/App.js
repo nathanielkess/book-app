@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Counter from './containers/counter/counter.container';
 import Auth from './containers/auth/auth.container';
+import CurrentUser from './components/current-user'
 
 const App = () =>
   <div className="App">
