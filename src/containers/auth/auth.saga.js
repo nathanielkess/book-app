@@ -2,7 +2,7 @@ import R from 'ramda';
 import { call, takeLatest, put } from 'redux-saga/effects';
 import AUTH from './auth.types';
 import api from '../../api/data';
-import { onLoginSuccess } from './auth.actions';
+import { onLoginSuccess, onLogOutSuccess } from './auth.actions';
 
 const transformUser = R.pick([
   'displayName',
@@ -31,8 +31,27 @@ function *watchForGoogleLoginAttempt() {
   );
 }
 
+function *watchForLogOutAttempt() {
+  yield takeLatest(
+    ({ type, payload = {} }) => {
+      const { authType } = payload;
+      return type === AUTH.ATTEMPTING && authType === 'logout';
+    },
+    function* logOut() {
+      try {
+        yield* api.signOut();
+        yield put(onLogOutSuccess());
+      } catch (e) {
+        console.log('failed to logout', e);
+      }
+    },
+  );
+}
+
 export function* startAuthWatchers() {
   yield [
     call(watchForGoogleLoginAttempt),
+    call(watchForLogOutAttempt),
   ];
 }
+

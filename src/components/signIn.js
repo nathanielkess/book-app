@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Button from './button';
 
-
 const SignIn = ({
   onGoogleAuth,
   onFacebookAuth,
@@ -24,6 +23,5 @@ SignIn.propTypes = {
   onGoogleAuth: PropTypes.func,
   onFacebookAuth: PropTypes.func,
 };
-
 
 export default SignIn;

@@ -3,7 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 import Counter from './containers/counter/counter.container';
 import Auth from './containers/auth/auth.container';
-import CurrentUser from './components/current-user'
 
 const App = () =>
   <div className="App">
@@ -11,9 +10,11 @@ const App = () =>
       <img src={logo} className="App-logo" alt="logo" />
       <h2>Welcome to React</h2>
     </div>
-    <Counter />
-    <Auth />
-    <br />
+    <div className="mainContent">
+      <Counter />
+      <br />
+      <Auth />
+    </div>
   </div>;
 
 export default App;
