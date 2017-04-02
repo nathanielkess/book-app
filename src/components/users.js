@@ -1,16 +1,15 @@
 import React, { PropTypes } from 'react';
 
-
 const Users = ({
   users = [],
 }) =>
   <ul className="usersList">
     {
-      users.map(user => <li>{user}</li>)
+      users.map(({
+        displayName,
+        uid,
+      }) => <li key={uid}>{displayName}</li>)
     }
-    <li>Some User</li>
-    <li>Some User</li>
-    <li>Some User</li>
   </ul>;
 
 Users.propTypes = {
