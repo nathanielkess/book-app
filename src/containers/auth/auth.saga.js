@@ -1,15 +1,24 @@
 import R from 'ramda';
-import { call, takeLatest, put } from 'redux-saga/effects';
+import { call, takeLatest, put, select } from 'redux-saga/effects';
 import AUTH from './auth.types';
 import api from '../../api/data';
 import { onLoginSuccess, onLogOutSuccess } from './auth.actions';
+import { getUid } from '../raw-selectors';
 
-const transformUser = R.pick([
+const getUserProperties = R.pick([
   'displayName',
   'photoURL',
   'email',
   'uid',
 ]);
+
+const transformUser = R.compose(
+  user => ({
+    ...user,
+    isOnline: true,
+  }),
+  getUserProperties,
+);
 
 function *watchForGoogleLoginAttempt() {
   yield takeLatest(
@@ -39,8 +48,9 @@ function *watchForLogOutAttempt() {
     },
     function* logOut() {
       try {
-        yield* api.signOut();
-        yield put(onLogOutSuccess());
+        const currentUid = yield select(getUid);
+        yield* api.signOut(currentUid);
+        yield put(onLogOutSuccess(currentUid));
       } catch (e) {
         console.log('failed to logout', e);
       }

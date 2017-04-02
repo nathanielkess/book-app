@@ -12,8 +12,13 @@ function* addUser(user) {
   yield userRef.child(user.uid).set(user);
 }
 
-function* signOut() {
-  yield auth.signOut();
+function* signOut(key) {
+  try {
+    yield userRef.child(key).update({ isOnline: false });
+    yield auth.signOut();
+  } catch (e) {
+    console.log('fail to login', e);
+  }
 }
 
 function createUsersEventChannel() {

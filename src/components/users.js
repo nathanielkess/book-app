@@ -8,7 +8,12 @@ const Users = ({
       users.map(({
         displayName,
         uid,
-      }) => <li key={uid}>{displayName}</li>)
+        isOnline,
+      }) =>
+        <li key={uid}>
+          {displayName}
+          {isOnline && <span> [Online]</span> }
+        </li>)
     }
   </ul>;
 
