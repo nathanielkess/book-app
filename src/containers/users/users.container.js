@@ -7,5 +7,4 @@ const mapStateToProps = createStructuredSelector({
   users: getUsers,
 });
 
-
 export default connect(mapStateToProps, null)(user);

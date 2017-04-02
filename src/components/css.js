@@ -4,4 +4,3 @@ export const buttonStyles = {
   border: 'none',
   color: '#ffffff',
 };
-
