@@ -50,7 +50,7 @@ function *watchForLogOutAttempt() {
       try {
         const currentUid = yield select(getUid);
         yield* api.signOut(currentUid);
-        yield put(onLogOutSuccess(currentUid));
+        yield put(onLogOutSuccess());
       } catch (e) {
         console.log('failed to logout', e);
       }

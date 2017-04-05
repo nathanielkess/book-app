@@ -11,8 +11,12 @@ const Users = ({
         isOnline,
       }) =>
         <li key={uid}>
-          {displayName}
-          {isOnline && <span> [Online]</span> }
+          <span style={{ paddingRight: 5 }}>{displayName}</span>
+          {
+            isOnline
+            ? <a href="#onlineUser">[Online]</a>
+            : <span> [Offline]</span>
+          }
         </li>)
     }
   </ul>;

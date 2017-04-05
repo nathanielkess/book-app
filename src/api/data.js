@@ -16,8 +16,10 @@ function* signOut(key) {
   try {
     yield userRef.child(key).update({ isOnline: false });
     yield auth.signOut();
+    return true;
   } catch (e) {
     console.log('fail to login', e);
+    return false;
   }
 }
 

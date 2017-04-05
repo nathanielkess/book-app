@@ -1,35 +1,27 @@
 import R from 'ramda';
 import USERS from './users.types';
-import AUTH from '../auth/auth.types';
 
 const initialState = [];
 
-
 export default(state = initialState, { type, payload }) => {
   switch (type) {
-    case USERS.UPDATED :
+    case USERS.ADD_OR_REMOVED :
       return [
         ...state,
         payload,
       ];
-    case AUTH.LOGGED_OUT :
+    case USERS.EDITED :
+      return R.compose(
+        R.adjust((obj) => {
+          const newObj = {
+            ...obj,
+            ...payload,
+          };
+          return newObj;
+        }, R.__, state),
+        R.findIndex(R.propEq('uid', R.prop('uid', payload))),
+      )(state);
 
-      const index = R.findIndex(R.propEq('uid', payload))(state);
-      const updatedArray = R.adjust((obj) => {
-        const newObj = {
-          ...obj,
-          isOnline: false,
-        };
-        console.log('New OBJ', newObj);
-        return newObj;
-      }, index, state);
-
-
-      // console.log(index);
-      // console.log(updatedArray);
-      // // console.log('set user isOnline:false', payload);
-      // console.log(state);
-      return updatedArray;
     default:
       return state;
   }
