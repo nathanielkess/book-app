@@ -20,3 +20,4 @@ function* watchForUsersUpdates() {
 export function* startUsersWatchers() {
   yield fork(watchForUsersUpdates);
 }
+

@@ -34,7 +34,20 @@ function createUsersEventChannel() {
   return listener;
 }
 
+function userDetailsChangedChannel() {
+  const listener = eventChannel(
+    (emit) => {
+      userRef.on('child_changed',
+        snap => emit(snap.val()),
+      );
+      return () => userRef.off(listener);
+    },
+  );
+  return listener;
+}
+
 export default {
+  userDetailsChangedChannel,
   createUsersEventChannel,
   signInWithGoogle,
   addUser,
