@@ -1,5 +1,5 @@
-import { startAuthWatchers } from './features/auth/auth.saga';
-import { startUsersWatchers } from './features/users/users.saga';
+import { startAuthWatchers } from './model/auth/auth.saga';
+import { startUsersWatchers } from './model/users/users.saga';
 
 export function * helloSaga() {
   yield 'hello saga';

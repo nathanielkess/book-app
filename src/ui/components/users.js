@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import User from './../___organisms/user';
+import User from './user';
 
 const Users = ({
   users = [],

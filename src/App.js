@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Counter from './features/counter/counter.container';
-import Auth from './features/auth/auth.container';
-import Users from './features/users/users.container';
+import Counter from './ui/containers/counter.container';
+import Auth from './ui/containers/auth.container';
+import Users from './ui/containers/users.container';
 
 const App = () =>
   <div className="App">
