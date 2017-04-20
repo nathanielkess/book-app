@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import User from './../___organisms/user';
 
 const Users = ({
   users = [],
@@ -11,12 +12,7 @@ const Users = ({
         isOnline,
       }) =>
         <li key={uid}>
-          <span style={{ paddingRight: 5 }}>{displayName}</span>
-          {
-            isOnline
-            ? <a href="#onlineUser">[Online]</a>
-            : <span> [Offline]</span>
-          }
+          <User isOnline={isOnline} displayName={displayName} />
         </li>)
     }
   </ul>;

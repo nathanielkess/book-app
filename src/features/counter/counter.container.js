@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import counter from '../../components/counter';
+import counter from './../../components/___organisms/counter';
 import mapStateToProps from './counter.selector';
 import * as mapDispatchToProps from './counter.actions';
 

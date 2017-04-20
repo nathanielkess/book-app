@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Button from '../components/button';
+import Button from './../_____atoms/button';
 
 const CurrentUser = ({
   name,

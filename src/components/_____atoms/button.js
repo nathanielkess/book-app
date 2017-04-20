@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
-import { buttonStyles } from './css';
 
 const Button = ({ children, onClick }) =>
-  <button style={{ ...buttonStyles }} onClick={onClick}>
+  <button className="button" onClick={onClick}>
     { children }
   </button>;
 

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Button from './button';
+import Button from './../_____atoms/button';
 
 const Counter = ({ count, onIncrement, onDecrement }) =>
   <div className="Loading">

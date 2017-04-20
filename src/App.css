@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
 
 .App-logo { animation: App-logo-spin infinite 20s linear; height: 80px; }
   .App-header { background-color: #222; height: 150px; padding: 20px; color: white;text-align: center; }
@@ -13,3 +19,4 @@
   .currentUser .details { padding-left: 1em; flex: 1; text-align:left; }
   .currentUser img {max-height: 100px; display:block; border:1px solid #cfcfcf;}
 
+.button { padding:10px; background-color:#222222; border:0px; color:#ffffff; }

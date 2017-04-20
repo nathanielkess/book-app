@@ -2,9 +2,9 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga';
-import counter from './containers/counter/counter.reducer';
-import auth from './containers/auth/auth.reducer';
-import users from './containers/users/users.reducer';
+import counter from './features/counter/counter.reducer';
+import auth from './features/auth/auth.reducer';
+import users from './features/users/users.reducer';
 
 const logger = createLogger({
   collapsed: true,
