@@ -1,0 +1,15 @@
+machine:
+  node:
+    version: 7
+
+dependencies:
+  pre:
+    # Clean out node-modules to prevent issues with circle-ci's caching.
+    - rm -rf node_modules
+
+test:
+  # to prevent CircleCI from executing Xcode build
+  # and running native tests for an OSX build
+  override:
+    - npm run test
+  # post:
