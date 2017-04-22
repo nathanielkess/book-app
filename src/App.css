@@ -1,9 +1,19 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
+/*BASE
+*****************************************************/
+body { margin: 0;  padding: 0;  font-family: sans-serif;}
+img { max-width:100%; }
+/*Layout
+*****************************************************/
 
+/*Module
+*****************************************************/
+.button { cursor:pointer; padding:10px; background-color:#222222; border:0px; color:#ffffff; }
+
+.mainContent { padding:20px;}
+
+.currentUser { border: 1px solid #ccc; display: flex; justify-content: space-between; max-width:600px; }
+  .currentUser .details { padding-left: 1em; flex: 1; text-align:left; }
+  .currentUser img {max-height: 100px; display:block; border:1px solid #cfcfcf;}
 
 .App-logo { animation: App-logo-spin infinite 20s linear; height: 80px; }
   .App-header { background-color: #222; height: 150px; padding: 20px; color: white;text-align: center; }
@@ -13,10 +23,12 @@ body {
     to { transform: rotate(360deg); }
   }
 
-.mainContent { padding:20px;}
+.book { max-width:150px; padding:10px; }
 
-.currentUser { border: 1px solid #ccc; display: flex; justify-content: space-between; max-width:600px; }
-  .currentUser .details { padding-left: 1em; flex: 1; text-align:left; }
-  .currentUser img {max-height: 100px; display:block; border:1px solid #cfcfcf;}
+.bookList { list-style-type:none; padding:0px; margin:0px;}
+  .bookList li { margin:0px; padding:0px; display:inline-block; vertical-align:top;}
 
-.button { padding:10px; background-color:#222222; border:0px; color:#ffffff; }
+
+
+
+
