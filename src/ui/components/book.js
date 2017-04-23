@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
 
 const Book = ({ coverImagePath, title, author, ISBN }) =>
-  <div>
+  <div className="book">
     <img src={coverImagePath} alt={title} />
-    <p>{ title }</p>
-    <p>{ author }</p>
-    <p>{ ISBN }</p>
+    <p><strong>{ title }</strong></p>
+    <p>Author: { author }</p>
+    <p>ISBN: { ISBN }</p>
   </div>;
 
 Book.propTypes = {
-  coverImagePath: PropTypes.string,
-  title: PropTypes.string,
-  author: PropTypes.string,
-  ISBN: PropTypes.string,
+  coverImagePath: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  ISBN: PropTypes.string.isRequired,
 };
 
 export default Book;

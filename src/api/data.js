@@ -1,5 +1,6 @@
 import { eventChannel } from 'redux-saga';
 import { auth, googleAuthProvider, database } from './firebase';
+import bookData from './../mock/books-data';
 
 const userRef = database.ref('users');
 
@@ -48,7 +49,17 @@ function userDetailsChangedChannel() {
   return listener;
 }
 
+function getRemoteBooks() {
+  return new Promise((resolve) => {
+    window.setTimeout(
+      () => {
+        resolve(bookData);
+      }, 100);
+  });
+}
+
 export default {
+  getRemoteBooks,
   userDetailsChangedChannel,
   createUsersEventChannel,
   signInWithGoogle,

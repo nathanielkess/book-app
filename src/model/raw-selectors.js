@@ -9,3 +9,6 @@ export const getUid = R.path(['auth', 'uid']);
 
 // Users
 export const getUsers = R.prop('users');
+
+// Books
+export const getBooks = R.prop('books');
