@@ -18,4 +18,6 @@ deployment:
     # deploy a staging build everytime master is merged
     branch: master
     commands:
+      - git config --global user.email foo@bar.com
       - npm run deploy
+      

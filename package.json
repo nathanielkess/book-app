@@ -9,7 +9,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "predeploy": "npm run build",
-    "deploy": "git config --global user.email deployments@deployments.com&&gh-pages -d build"
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "eslint": "^3.18.0",
