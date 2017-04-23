@@ -9,14 +9,11 @@ function* signInWithGoogle() {
   return user;
 }
 
-<<<<<<< HEAD
-=======
-function* addUser(user) {
-  yield userRef.child(user.uid).set(user);
-  console.log('that breaks because it re-adds the user and overrides any edits they have (like the books)');
-}
+// function* addUser(user) {
+//   yield userRef.child(user.uid).set(user);
+//   console.log('that breaks because it re-adds the user and overrides any edits they have (like the books)');
+// }
 
->>>>>>> WIP (need to fix auth sign in overrides users data)
 function* signOut(key) {
   try {
     yield userRef.child(key).update({ isOnline: false });
