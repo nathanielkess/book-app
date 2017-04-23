@@ -13,3 +13,9 @@ test:
   override:
     - npm run test
   # post:
+deployment:
+  staging:
+    # deploy a staging build everytime master is merged
+    branch: master
+    commands:
+      - npm run deploy

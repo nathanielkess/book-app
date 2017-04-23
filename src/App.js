@@ -9,7 +9,7 @@ const App = () =>
   <div className="App">
     <div className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
-      <h2>Book App</h2>
+      <h2>Book App - Staging build 1</h2>
     </div>
     <div className="mainContent">
       <Counter />
