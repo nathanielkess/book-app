@@ -20,4 +20,8 @@ deployment:
     commands:
       - git config --global user.email foo@bar.com
       - npm run deploy
-      
+experimental:
+  notify:
+    branches:
+      only:
+        - master
