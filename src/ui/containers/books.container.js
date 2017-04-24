@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { compose, lifecycle } from 'recompose';
+import { compose, lifecycle, renameProp } from 'recompose';
 import BookList from './../components/book-list';
 import data from './../../api/data';
 import * as mapDispatchToProps from './../../model/books/books.actions';
@@ -14,6 +14,7 @@ const mapStateToProps = createStructuredSelector({
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  renameProp('onIReadABook', 'onIReadThis'),
   lifecycle({
     componentDidMount() {
       const { onFetchBooks } = this.props;

@@ -8,6 +8,7 @@ const Book = ({
   author,
   ISBN,
   showAuthenticatedStuff = false,
+  onIReadThis,
 }) =>
   <div className="book">
     <img src={coverImagePath} alt={title} />
@@ -16,7 +17,7 @@ const Book = ({
     <p>ISBN: { ISBN }</p>
     { showAuthenticatedStuff &&
       <p>
-        <Button onClick={() => console.log('fire action to select this book', ISBN)}>I read this</Button>
+        <Button onClick={() => onIReadThis(ISBN)}>I read this</Button>
       </p>
     }
   </div>;
@@ -27,6 +28,7 @@ Book.propTypes = {
   author: PropTypes.string.isRequired,
   ISBN: PropTypes.string.isRequired,
   showAuthenticatedStuff: PropTypes.bool,
+  onIReadThis: PropTypes.func,
 };
 
 export default Book;
