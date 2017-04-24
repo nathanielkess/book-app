@@ -1,56 +1,52 @@
-import { call, fork, takeLatest, select, take } from 'redux-saga/effects';
-import api from '../../api/data';
+import R from 'ramda';
+import { call, take, select, put, fork } from 'redux-saga/effects';
 import BOOKS from './books.types';
 import { database } from './../../api/firebase';
-import { getCurrentUser } from './../auth/auth.selector';
+import { getTheUser, getUid } from './../raw-selectors';
+import { createBooksIveReadAddedEventChannel } from './books.service';
 import AUTH from './../auth/auth.types';
+import { onBooksIReadChanged } from './books.actions';
 
 const bookRef = database.ref('books');
 const userRef = database.ref('users');
 
 function *addNewbookReadByUser(book, { uid }) {
-  yield bookRef.child(book.ISBN).set(book);
+  const existingBook = yield bookRef.child(book.ISBN).once('value');
+  if (R.isNil(existingBook.val())) {
+    yield bookRef.child(book.ISBN).set(book);
+  }
   yield bookRef.child(`/${book.ISBN}/readBy/${uid}`).set(true);
   yield userRef.child(`/${uid}/booksRead/${book.ISBN}`).set(true);
 }
 
+// tries to add a book when a book is 'read'
 function *watchForIReadABook() {
-  yield takeLatest(
-    ({ type }) => type === BOOKS.I_READ_A_BOOK,
-    function *addBook({ payload: book }) {
-      const existingBook = yield bookRef.child(book.ISBN).once('value');
-      if (!existingBook.val()) {
-        const currentUser = yield select(getCurrentUser);
-        yield* addNewbookReadByUser(book, currentUser);
-      } else {
-        console.log('book exists so update the user and the book (instead of adding it)');
-      }
-    },
-  );
+  while (true) {
+    const { payload: book } = yield take(BOOKS.I_READ_A_BOOK);
+    const currentUser = yield select(getTheUser);
+    yield* addNewbookReadByUser(book, currentUser);
+  }
 }
 
-function* watchForUserSuccessAuthToFetchBooksRead() {
-  // const { payload } = yield take(AUTH.SUCCEEDED);
-  // const userBookRef = database.ref(`users/${payload.user.uid}`);
-  // console.log(payload.user.uid);
-  // const booksRead = yield userBookRef.once('value');
-  // console.log(booksRead.val());
-
+function* udpateStoreWhenBooksIReadAdded() {
+  const uid = yield select(getUid);
+  const updateChannel = createBooksIveReadAddedEventChannel(uid);
+  while (true) {
+    const newISBN = yield take(updateChannel);
+    yield put(onBooksIReadChanged(newISBN));
+  }
 }
 
 function* watchForBooksIReadAdded() {
-  // console.log('after the user loggs in then get that users books read');
-  // const updateChannel = api.createBooksIveReadAddedEventChannel();
-  // while (true) {
-  //   const newISBN = yield take(updateChannel);
-  //   console.log(newISBN);
-  // }
+  while (true) {
+    yield take(AUTH.SUCCEEDED);
+    yield fork(udpateStoreWhenBooksIReadAdded);
+  }
 }
 
 export function* startBookshWatchers() {
   yield [
     call(watchForIReadABook),
-    // call(watchForBooksIReadAdded),
-    call(watchForUserSuccessAuthToFetchBooksRead),
+    call(watchForBooksIReadAdded),
   ];
 }
