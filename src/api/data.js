@@ -4,7 +4,6 @@ import bookData from './../mock/books-data';
 
 const userRef = database.ref('users');
 
-
 function* signInWithGoogle() {
   const user = yield auth.signInWithPopup(googleAuthProvider);
   return user;

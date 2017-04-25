@@ -11,14 +11,10 @@ const bookRef = database.ref('books');
 const userRef = database.ref('users');
 
 function *addNewbookReadByUser(book, { uid }) {
-<<<<<<< HEAD
   const existingBook = yield bookRef.child(book.ISBN).once('value');
   if (R.isNil(existingBook.val())) {
     yield bookRef.child(book.ISBN).set(book);
   }
-=======
-  yield bookRef.child(book.ISBN).set(book);
->>>>>>> real data added for new book
   yield bookRef.child(`/${book.ISBN}/readBy/${uid}`).set(true);
   yield userRef.child(`/${uid}/booksRead/${book.ISBN}`).set(true);
 }
