@@ -8,6 +8,7 @@ const userRef = database.ref('users');
 
 function *addNewbookReadByUser(book, { uid }) {
   yield bookRef.child(book.ISBN).set(book);
+  yield bookRef.child(`/${book.ISBN}/readBy/${uid}`).set(true);
   yield userRef.child(`/${uid}/booksRead/${book.ISBN}`).set(true);
 }
 
