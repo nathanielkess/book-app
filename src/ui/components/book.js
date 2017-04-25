@@ -17,7 +17,14 @@ const Book = ({
     <p>ISBN: { ISBN }</p>
     { showAuthenticatedStuff &&
       <p>
-        <Button onClick={() => onIReadThis(ISBN)}>I read this</Button>
+        <Button
+          onClick={() => onIReadThis({
+            coverImagePath,
+            title,
+            author,
+            ISBN,
+          })}
+        >I read this</Button>
       </p>
     }
   </div>;

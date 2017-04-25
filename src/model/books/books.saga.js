@@ -4,24 +4,21 @@ import { database } from './../../api/firebase';
 
 const bookRef = database.ref('books');
 
-function tryToAddABook(book) {
-  const { ISBN } = book;
-  return new Promise((resolve, reject) => {
-    bookRef.once(ISBN, function handleSelect(snap) {
-      if (true) {
-        console.log('test');
-      } else {
-        reject('This book already exists.');
-      }
-    });
+const addNewbookReadByUser = (book, { uid }) => {
+  bookRef.child(book.ISBN).set({
+    ...book,
+    readBy: { uid },
   });
-}
+};
 
 function *watchForIReadABook() {
   yield takeLatest(
     ({ type }) => type === BOOKS.I_READ_A_BOOK,
-    () => {
-      console.log('saga captured I read a book');
+    function *addBook({ payload: book }) {
+      const existingBook = yield bookRef.child(book.ISBN).once('value');
+      if (!existingBook.val()) {
+        addNewbookReadByUser(book, { uid: '12345678' });
+      }
     },
   );
 }
