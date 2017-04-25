@@ -4,12 +4,19 @@ import bookData from './../mock/books-data';
 
 const userRef = database.ref('users');
 
-
 function* signInWithGoogle() {
   const user = yield auth.signInWithPopup(googleAuthProvider);
   return user;
 }
 
+<<<<<<< HEAD
+=======
+function* addUser(user) {
+  yield userRef.child(user.uid).set(user);
+  console.log('that breaks because it re-adds the user and overrides any edits they have (like the books)');
+}
+
+>>>>>>> WIP (need to fix auth sign in overrides users data)
 function* signOut(key) {
   try {
     yield userRef.child(key).update({ isOnline: false });
@@ -55,9 +62,23 @@ function getRemoteBooks() {
   });
 }
 
+function createBooksIveReadAddedEventChannel() {
+  const listener = eventChannel(
+    (emit) => {
+      userRef.on(
+        'child_added',
+        data => emit(data.val()),
+      );
+      return () => userRef.off(listener);
+    },
+  );
+  return listener;
+}
+
 export default {
   getRemoteBooks,
   userDetailsChangedChannel,
+  createBooksIveReadAddedEventChannel,
   createUsersEventChannel,
   signInWithGoogle,
   signOut,

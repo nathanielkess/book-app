@@ -1,7 +1,9 @@
-import { call, takeLatest, select } from 'redux-saga/effects';
+import { call, fork, takeLatest, select, take } from 'redux-saga/effects';
+import api from '../../api/data';
 import BOOKS from './books.types';
 import { database } from './../../api/firebase';
 import { getCurrentUser } from './../auth/auth.selector';
+import AUTH from './../auth/auth.types';
 
 const bookRef = database.ref('books');
 const userRef = database.ref('users');
@@ -11,10 +13,6 @@ function *addNewbookReadByUser(book, { uid }) {
   yield bookRef.child(`/${book.ISBN}/readBy/${uid}`).set(true);
   yield userRef.child(`/${uid}/booksRead/${book.ISBN}`).set(true);
 }
-
-const setBookReadOnUser = ({ ISBN, uid }) => {
-  userRef.child(uid).child('booksRead').set()
-};
 
 function *watchForIReadABook() {
   yield takeLatest(
@@ -31,8 +29,28 @@ function *watchForIReadABook() {
   );
 }
 
+function* watchForUserSuccessAuthToFetchBooksRead() {
+  // const { payload } = yield take(AUTH.SUCCEEDED);
+  // const userBookRef = database.ref(`users/${payload.user.uid}`);
+  // console.log(payload.user.uid);
+  // const booksRead = yield userBookRef.once('value');
+  // console.log(booksRead.val());
+
+}
+
+function* watchForBooksIReadAdded() {
+  // console.log('after the user loggs in then get that users books read');
+  // const updateChannel = api.createBooksIveReadAddedEventChannel();
+  // while (true) {
+  //   const newISBN = yield take(updateChannel);
+  //   console.log(newISBN);
+  // }
+}
+
 export function* startBookshWatchers() {
   yield [
     call(watchForIReadABook),
+    // call(watchForBooksIReadAdded),
+    call(watchForUserSuccessAuthToFetchBooksRead),
   ];
 }
