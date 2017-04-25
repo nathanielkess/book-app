@@ -1,14 +1,18 @@
-import { call, takeLatest } from 'redux-saga/effects';
+import { call, takeLatest, select } from 'redux-saga/effects';
 import BOOKS from './books.types';
 import { database } from './../../api/firebase';
+import { getCurrentUser } from './../auth/auth.selector';
 
 const bookRef = database.ref('books');
+const userRef = database.ref('users');
 
-const addNewbookReadByUser = (book, { uid }) => {
-  bookRef.child(book.ISBN).set({
-    ...book,
-    readBy: { uid },
-  });
+function *addNewbookReadByUser(book, { uid }) {
+  yield bookRef.child(book.ISBN).set(book);
+  yield userRef.child(`/${uid}/booksRead/${book.ISBN}`).set(true);
+}
+
+const setBookReadOnUser = ({ ISBN, uid }) => {
+  userRef.child(uid).child('booksRead').set()
 };
 
 function *watchForIReadABook() {
@@ -17,7 +21,10 @@ function *watchForIReadABook() {
     function *addBook({ payload: book }) {
       const existingBook = yield bookRef.child(book.ISBN).once('value');
       if (!existingBook.val()) {
-        addNewbookReadByUser(book, { uid: '12345678' });
+        const currentUser = yield select(getCurrentUser);
+        yield* addNewbookReadByUser(book, currentUser);
+      } else {
+        console.log('book exists so update the user and the book (instead of adding it)');
       }
     },
   );
