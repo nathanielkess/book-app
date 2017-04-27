@@ -3,7 +3,7 @@ import { prefixActionTypes } from '../../utils/action-helper';
 const AUTH = prefixActionTypes('AUTH', [
   'ATTEMPTING',
   'SUCCEEDED',
-  'LOGGED_OUT',
+  'LOGOUT_SUCCEEDED',
 ]);
 
 export default AUTH;

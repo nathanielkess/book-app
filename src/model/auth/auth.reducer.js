@@ -1,7 +1,6 @@
 import AUTH from './auth.types';
 
 const initialState = {
-  status: 'ANONYMOUS',
   email: null,
   displayName: null,
   photoURL: null,
@@ -14,11 +13,13 @@ export default(state = initialState, { type, payload }) => {
       return {
         ...state,
         ...payload.user,
-        status: 'SIGNED_IN',
+        // status: 'SIGNED_IN',
+        isOnline: true,
       };
-    case AUTH.LOGGED_OUT :
+    case AUTH.LOGOUT_SUCCEEDED :
       return {
-        status: 'SIGNED_OUT',
+        // status: 'SIGNED_OUT',
+        isOnline: false,
       };
     default:
       return state;

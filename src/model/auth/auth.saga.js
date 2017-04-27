@@ -1,9 +1,25 @@
 import R from 'ramda';
-import { call, takeLatest, put, select } from 'redux-saga/effects';
+import { call, put, select, take } from 'redux-saga/effects';
+import { eventChannel } from 'redux-saga';
+import firebase from 'firebase';
 import AUTH from './auth.types';
-import api from '../../api/data';
 import { onLoginSuccess, onLogOutSuccess } from './auth.actions';
 import { getUid } from '../raw-selectors';
+import { auth, googleAuthProvider } from '././../../api/firebase';
+import { setUserOnlineState } from './../users/users.saga';
+
+function createAuthStateChangedChannel() {
+  const listener = eventChannel(
+    (emit) => {
+      const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        const emitttedUser = (user) || {};
+        emit(emitttedUser);
+      });
+      return unsubscribe;
+    },
+  );
+  return listener;
+}
 
 const getUserProperties = R.pick([
   'displayName',
@@ -12,55 +28,59 @@ const getUserProperties = R.pick([
   'uid',
 ]);
 
-const transformUser = R.compose(
-  user => ({
-    ...user,
-    isOnline: true,
-  }),
-  getUserProperties,
-);
-
-function *watchForGoogleLoginAttempt() {
-  yield takeLatest(
-    ({ type, payload = {} }) => {
-      const { authType } = payload;
-      return type === AUTH.ATTEMPTING && authType === 'google';
-    },
-    function* login() {
-      try {
-        const signedInUser = yield* api.signInWithGoogle();
-        // TODO: handle user failing to login
-        const user = transformUser(signedInUser.user);
-        yield api.addUser(user);
-        yield put(onLoginSuccess(user));
-      } catch (e) {
-        console.log('fail to login', e);
-      }
-    },
-  );
+function* logout() {
+  const currentUid = yield select(getUid);
+  yield setUserOnlineState(currentUid, false);
+  yield auth.signOut();
 }
 
-function *watchForLogOutAttempt() {
-  yield takeLatest(
-    ({ type, payload = {} }) => {
-      const { authType } = payload;
-      return type === AUTH.ATTEMPTING && authType === 'logout';
-    },
-    function* logOut() {
-      try {
-        const currentUid = yield select(getUid);
-        yield* api.signOut(currentUid);
-        yield put(onLogOutSuccess());
-      } catch (e) {
-        console.log('failed to logout', e);
+function *login() {
+  googleAuthProvider.setCustomParameters({
+    prompt: 'select_account',
+  });
+  yield auth.signInWithPopup(googleAuthProvider);
+}
+
+function *watchForLoginAttempt() {
+  while (true) {
+    const { payload: { authType } } = yield take(AUTH.ATTEMPTING);
+    try {
+      switch (authType) {
+        case 'google' :
+          yield login();
+          break;
+        case 'facebook' :
+          console.log('login with facebook');
+          break;
+        case 'logout' :
+          yield* logout();
+          break;
+        default:
+          console.log('some other login attempt');
+          break;
       }
-    },
-  );
+    } catch (e) {
+      console.log('fail to login', e);
+    }
+  }
+}
+
+function *watchForAuthChange() {
+  const userAuthChangedChannel = createAuthStateChangedChannel();
+  while (true) {
+    const rawUser = yield take(userAuthChangedChannel);
+    const user = getUserProperties(rawUser);
+    if (R.isEmpty(rawUser)) {
+      yield put(onLogOutSuccess());
+    } else {
+      yield put(onLoginSuccess(user));
+    }
+  }
 }
 
 export function* startAuthWatchers() {
   yield [
-    call(watchForGoogleLoginAttempt),
-    call(watchForLogOutAttempt),
+    call(watchForAuthChange),
+    call(watchForLoginAttempt),
   ];
 }

@@ -9,10 +9,6 @@ function* signInWithGoogle() {
   return user;
 }
 
-function* addUser(user) {
-  yield userRef.child(user.uid).set(user);
-}
-
 function* signOut(key) {
   try {
     yield userRef.child(key).update({ isOnline: false });
@@ -63,6 +59,5 @@ export default {
   userDetailsChangedChannel,
   createUsersEventChannel,
   signInWithGoogle,
-  addUser,
   signOut,
 };

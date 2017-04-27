@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose, renderNothing, branch } from 'recompose';
 import users from '../../ui/components/users';
-import { getUsers } from './../../model/raw-selectors';
-import { getIsLoggedIn } from './../../model/auth/auth.selector';
+import { getUsers, getAuthStatus } from './../../model/raw-selectors';
 
 const mapStateToProps = createStructuredSelector({
   users: getUsers,
-  isLoggedIn: getIsLoggedIn,
+  isLoggedIn: getAuthStatus,
 });
 
 const showIfAuthorized = branch(
