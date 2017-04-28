@@ -8,7 +8,7 @@ export const createBooksIveReadAddedEventChannel = (uid) => {
     (emit) => {
       userRef.child(`/${uid}/booksRead`).on(
         'child_added',
-        data => emit(data.val()),
+        data => emit(data.key),
       );
       return () => userRef.off(listener);
     },

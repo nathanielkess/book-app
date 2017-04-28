@@ -9,11 +9,6 @@ function* signInWithGoogle() {
   return user;
 }
 
-// function* addUser(user) {
-//   yield userRef.child(user.uid).set(user);
-//   console.log('that breaks because it re-adds the user and overrides any edits they have (like the books)');
-// }
-
 function* signOut(key) {
   try {
     yield userRef.child(key).update({ isOnline: false });
@@ -59,12 +54,9 @@ function getRemoteBooks() {
   });
 }
 
-
-
 export default {
   getRemoteBooks,
   userDetailsChangedChannel,
-  //createBooksIveReadAddedEventChannel,
   createUsersEventChannel,
   signInWithGoogle,
   signOut,

@@ -13,3 +13,4 @@ export const getUsers = R.prop('users');
 
 // Books
 export const getBooks = R.prop('books');
+export const getBooksRead = R.prop('booksRead');

@@ -4,7 +4,6 @@ import { createStructuredSelector } from 'reselect';
 import { compose, withProps, branch, renderComponent } from 'recompose';
 import signIn from './../../ui/components/signIn';
 import currentUser from './../../ui/components/current-user';
-// import mapStateToProps from '../counter/counter.selector';
 import * as mapDispatchToProps from './../../model/auth/auth.actions';
 import { getName, getPhotoURL, getAuthStatus } from './../../model/raw-selectors';
 import store from '../../store';
