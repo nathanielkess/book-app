@@ -59,23 +59,12 @@ function getRemoteBooks() {
   });
 }
 
-function createBooksIveReadAddedEventChannel() {
-  const listener = eventChannel(
-    (emit) => {
-      userRef.on(
-        'child_added',
-        data => emit(data.val()),
-      );
-      return () => userRef.off(listener);
-    },
-  );
-  return listener;
-}
+
 
 export default {
   getRemoteBooks,
   userDetailsChangedChannel,
-  createBooksIveReadAddedEventChannel,
+  //createBooksIveReadAddedEventChannel,
   createUsersEventChannel,
   signInWithGoogle,
   signOut,

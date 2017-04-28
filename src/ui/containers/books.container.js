@@ -4,12 +4,11 @@ import { compose, lifecycle, renameProp } from 'recompose';
 import BookList from './../components/book-list';
 import data from './../../api/data';
 import * as mapDispatchToProps from './../../model/books/books.actions';
-import { getBooks } from './../../model/raw-selectors';
-import { getIsLoggedIn } from './../../model/auth/auth.selector';
+import { getBooks, getAuthStatus } from './../../model/raw-selectors';
 
 const mapStateToProps = createStructuredSelector({
   books: getBooks,
-  showAuthenticatedStuff: getIsLoggedIn,
+  showAuthenticatedStuff: getAuthStatus,
 });
 
 export default compose(
