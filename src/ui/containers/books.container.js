@@ -1,17 +1,20 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { compose, lifecycle } from 'recompose';
+import { compose, lifecycle, renameProp } from 'recompose';
 import BookList from './../components/book-list';
 import data from './../../api/data';
 import * as mapDispatchToProps from './../../model/books/books.actions';
-import { getBooks } from './../../model/raw-selectors';
+import { getAuthStatus } from './../../model/raw-selectors';
+import { getBooks } from './../../model/books/books.selectors';
 
 const mapStateToProps = createStructuredSelector({
   books: getBooks,
+  showAuthenticatedStuff: getAuthStatus,
 });
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  renameProp('onIReadABook', 'onIReadThis'),
   lifecycle({
     componentDidMount() {
       const { onFetchBooks } = this.props;

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Book from './book';
 
-const BooksList = ({ books }) =>
+const BooksList = props =>
   <ul className="bookList">
-    { books.map(book =>
+    { props.books.map(book =>
       <li key={book.ISBN}>
-        <Book {...book} />
+        <Book {...props} {...book} />
       </li>,
     )}
   </ul>;
