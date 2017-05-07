@@ -1,6 +1,5 @@
 import { eventChannel } from 'redux-saga';
 import { auth, googleAuthProvider, database } from './firebase';
-import bookData from './../mock/books-data';
 
 const userRef = database.ref('users');
 
@@ -15,7 +14,6 @@ function* signOut(key) {
     yield auth.signOut();
     return true;
   } catch (e) {
-    console.log('fail to login', e);
     return false;
   }
 }
@@ -45,13 +43,19 @@ function userDetailsChangedChannel() {
   return listener;
 }
 
+function transformBooks(bookData) {
+  if (bookData.isbns.length === 0) {
+    bookData.isbns = [{}];
+  }
+  return { author: bookData.author, title: bookData.title, ISBN: bookData.isbns[0].isbn13 };
+}
+
+const hasISBN = book => (book.ISBN);
+
 function getRemoteBooks() {
-  return new Promise((resolve) => {
-    window.setTimeout(
-      () => {
-        resolve(bookData);
-      }, 100);
-  });
+  return fetch('https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?api-key=8742500acd2b41a9a1143b62c7e557c9')
+  .then(data => data.json())
+  .then(response => response.results.map(transformBooks).filter(hasISBN));
 }
 
 export default {
