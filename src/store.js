@@ -4,7 +4,8 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga';
 import auth from './model/auth/auth.reducer';
 import users from './model/users/users.reducer';
-import { books, booksRead } from './model/books/books.reducer';
+import { books, booksRead, booksSearch } from './model/books/books.reducer';
+// import { search } from './model/book-search/book-search.reducer';
 
 const logger = createLogger({
   collapsed: true,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   users,
   books,
   booksRead,
+  booksSearch,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -3,7 +3,7 @@ import { database } from './../../api/firebase';
 
 const userRef = database.ref('users');
 
-export const createBooksIveReadAddedEventChannel = (uid) => {
+const createBooksIveReadAddedEventChannel = (uid) => {
   const listener = eventChannel(
     (emit) => {
       userRef.child(`/${uid}/booksRead`).on(
@@ -14,4 +14,13 @@ export const createBooksIveReadAddedEventChannel = (uid) => {
     },
   );
   return listener;
+};
+
+const getBooksFromSearch = query =>
+  fetch(`https://www.googleapis.com/books/v1/volumes?q="${query}"`)
+    .then(data => data.json());
+
+export default {
+  createBooksIveReadAddedEventChannel,
+  getBooksFromSearch,
 };
