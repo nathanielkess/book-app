@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from './button';
 
 const Book = ({
-  coverImagePath,
+  coverImagePath = 'https://images-na.ssl-images-amazon.com/images/I/51XYO1vfQyL.jpg',
   title,
   author,
   ISBN,
