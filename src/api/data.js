@@ -44,18 +44,27 @@ function userDetailsChangedChannel() {
 }
 
 function transformBooks(bookData) {
-  if (bookData.isbns.length === 0) {
-    bookData.isbns = [{}];
-  }
-  return { author: bookData.author, title: bookData.title, ISBN: bookData.isbns[0].isbn13 };
+  return {
+    author: bookData.author,
+    title: bookData.title,
+    ISBN: bookData.primary_isbn13,
+    coverImagePath: bookData.book_image,
+  };
 }
 
 const hasISBN = book => (book.ISBN);
 
 function getRemoteBooks() {
-  return fetch('https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?api-key=8742500acd2b41a9a1143b62c7e557c9')
+  const youngAdultFiction = 10;
+  const childrenSeries = 9;
+  return fetch('https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=8742500acd2b41a9a1143b62c7e557c9')
   .then(data => data.json())
-  .then(response => response.results.map(transformBooks).filter(hasISBN));
+  .then((json) => {
+    const youngAdultBooks = json.results.lists[youngAdultFiction].books;
+    const childrenBooks = json.results.lists[childrenSeries].books;
+    return youngAdultBooks.concat(childrenBooks);
+  })
+  .then(response => response.map(transformBooks).filter(hasISBN));
 }
 
 export default {
