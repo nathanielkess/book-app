@@ -4,6 +4,7 @@ import './App.css';
 import Auth from './ui/containers/auth.container';
 import Users from './ui/containers/users.container';
 import Books from './ui/containers/books.container';
+import Search from './ui/containers/book-search.container';
 
 const App = () =>
   <div className="App">
