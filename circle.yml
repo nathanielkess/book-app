@@ -16,6 +16,7 @@ test:
   # and running native tests for an OSX build
   override:
     - npm run test
+    - npm run lint
   # post:
 deployment:
   staging:
