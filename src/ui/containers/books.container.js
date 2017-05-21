@@ -5,10 +5,10 @@ import BookList from './../components/book-list';
 import data from './../../api/data';
 import * as mapDispatchToProps from './../../model/books/books.actions';
 import { getAuthStatus } from './../../model/raw-selectors';
-import { getBooks } from './../../model/books/books.selectors';
+import { getFilteredBooks } from './../../model/books/books.selectors';
 
 const mapStateToProps = createStructuredSelector({
-  books: getBooks,
+  books: getFilteredBooks,
   showAuthenticatedStuff: getAuthStatus,
 });
 

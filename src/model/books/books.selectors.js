@@ -1,3 +1,4 @@
+import FuzzySearch from 'fuzzy-search';
 import R from 'ramda';
 import { createSelector } from 'reselect';
 import { getBooks as getRawBooks, getBooksRead } from './../raw-selectors';
@@ -9,6 +10,13 @@ const addReadPropertyByISBN = (books, ISBN) => {
   return R.adjust(addReadPropToObj, index, books);
 };
 
+const fuzzy = books => (term) => {
+  const searcher = new FuzzySearch(books, ['ISBN', 'author', 'title'], {
+    caseSensitive: false,
+  });
+  return searcher.search(term);
+};
+
 export const getBooks = createSelector(
   [getRawBooks, getBooksRead],
   (rawBooks, ISBNsOfBooksIRead) => R.reduce(
@@ -16,3 +24,12 @@ export const getBooks = createSelector(
     rawBooks,
     ISBNsOfBooksIRead,
   ));
+
+export const getFilteredBooks = createSelector(
+  [getBooks],
+  (books) => {
+    if (books.length > 0) {
+      return fuzzy(books)('Steve');
+    }
+    return books;
+  });
