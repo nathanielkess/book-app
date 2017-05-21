@@ -11,6 +11,7 @@ const App = () =>
     <div className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <h2>Book App</h2>
+    <Search />
     </div>
     <div className="mainContent">
       <Auth />

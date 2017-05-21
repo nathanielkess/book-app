@@ -1,15 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from './button';
 
 const SearchBar = ({
   waterMarkText = 'search',
-  onSubmitFunction,
-  somethingElse,
+  onChange,
 }) =>
-  <div classname="SearchComponent">
-    <input type="text" placeholder={waterMarkText} onClick={onSubmitFunction} />
-    <input type="submit" value="search" />
-  </div>;
+  (<div className="SearchComponent">
+  <input
+      onChange={(e) => {
+        onChange(e.target.value);
+      }}
+      type="text" placeholder={waterMarkText}
+    />
+    <Button> Click Me </Button>
+  </div>);
 
 SearchBar.propTypes = {
   waterMarkText: PropTypes.string,

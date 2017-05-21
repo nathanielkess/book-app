@@ -3,18 +3,16 @@ import { createStructuredSelector } from 'reselect';
 import { compose, lifecycle, renameProp } from 'recompose';
 import SearchBar from './../components/search-bar';
 import data from './../../api/data';
-import * as mapDispatchToProps from './../../model/books/books.actions';
+import * as mapDispatchToProps from './../../model/book-search/book-search.actions';
 import { getAuthStatus } from './../../model/raw-selectors';
 import { getBooks } from './../../model/books/books.selectors';
 
 const mapStateToProps = createStructuredSelector({
-  waterMarkText = 'search',
-  onSubmitFunction,
-  somethingElse,
+  waterMarkText: () => 'search',
 });
 
 export default connect(
-  null, null
+  mapStateToProps, mapDispatchToProps
 )(SearchBar)
 
 // export default compose(

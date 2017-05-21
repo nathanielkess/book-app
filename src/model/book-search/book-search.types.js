@@ -1,7 +1,7 @@
 import { prefixActionTypes } from '../../utils/action-helper';
 
 const SEARCH = prefixActionTypes('SEARCH', [
-  'INITIATED',
+  'TERM_CHANGED',
   'PENDING',
   'RECEIVED'
 ]);
