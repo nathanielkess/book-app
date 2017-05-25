@@ -5,6 +5,7 @@ import Button from './button';
 const SearchBar = ({
   waterMarkText = 'search',
   onChange,
+  onSearch,
 }) =>
   (<div className="SearchComponent">
   <input
@@ -13,7 +14,7 @@ const SearchBar = ({
       }}
       type="text" placeholder={waterMarkText}
     />
-    <Button> Click Me </Button>
+    <Button onClick={onSearch}> Click Me </Button>
   </div>);
 
 SearchBar.propTypes = {

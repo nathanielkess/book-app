@@ -1,5 +1,6 @@
 import { eventChannel } from 'redux-saga';
 import { auth, googleAuthProvider, database } from './firebase';
+import bookData from './../mock/books-data';
 
 const userRef = database.ref('users');
 
@@ -67,8 +68,18 @@ function getRemoteBooks() {
   .then(response => response.map(transformBooks).filter(hasISBN));
 }
 
+function getSearchRemoteBooks(searchTerm) {
+  return new Promise((resolve) => {
+     window.setTimeout(
+       () => {
+         resolve(bookData);
+       }, 100);
+   });
+}
+
 export default {
   getRemoteBooks,
+  getSearchRemoteBooks,
   userDetailsChangedChannel,
   createUsersEventChannel,
   signInWithGoogle,
