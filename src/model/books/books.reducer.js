@@ -20,3 +20,12 @@ export const booksRead = (state = [], { type, payload }) => {
       return state;
   }
 };
+
+export const booksSearch = (state = null, { type, payload }) => {
+  switch (type) {
+    case BOOKS.SEARCH_TERM_CHANGED :
+      return payload;
+    default:
+      return state;
+  }
+};
