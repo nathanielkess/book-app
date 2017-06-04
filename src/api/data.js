@@ -44,12 +44,12 @@ function userDetailsChangedChannel() {
   return listener;
 }
 
-function transformBooks(bookData) {
+function transformBooks(bkData) {
   return {
-    author: bookData.author,
-    title: bookData.title,
-    ISBN: bookData.primary_isbn13,
-    coverImagePath: bookData.book_image,
+    author: bkData.author,
+    title: bkData.title,
+    ISBN: bkData.primary_isbn13,
+    coverImagePath: bkData.book_image,
   };
 }
 
@@ -69,12 +69,13 @@ function getRemoteBooks() {
 }
 
 function getSearchRemoteBooks(searchTerm) {
+  // search term
   return new Promise((resolve) => {
-     window.setTimeout(
+    window.setTimeout(
        () => {
          resolve(bookData);
        }, 100);
-   });
+  });
 }
 
 export default {

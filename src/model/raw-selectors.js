@@ -15,5 +15,5 @@ export const getUsers = R.prop('users');
 export const getBooks = R.prop('books');
 export const getBooksRead = R.prop('booksRead');
 
-//Book Search
+// Book Search
 export const getBookSearhTerm = R.prop('search');
