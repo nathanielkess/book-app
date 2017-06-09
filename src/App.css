@@ -28,7 +28,10 @@ img { max-width:100%; }
 .bookList { list-style-type:none; padding:0px; margin:0px;}
   .bookList li { margin:0px; padding:0px; display:inline-block; vertical-align:top;}
 
+.bookThumbnail { display:inline-block; vertical-align:top; width:60px; }
+  .bookThumbnail > img { display: block; width:100%; }
 
-
+.booksReadList { list-style-type:none; display:inline-block; padding:0px; margin:0px; }
+  .booksReadList li { padding:5px; }
 
 

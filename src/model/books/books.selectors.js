@@ -11,8 +11,20 @@ const addReadPropertyByISBN = (books, ISBN) => {
 
 export const getBooks = createSelector(
   [getRawBooks, getBooksRead],
-  (rawBooks, ISBNsOfBooksIRead) => R.reduce(
-    addReadPropertyByISBN,
-    rawBooks,
-    ISBNsOfBooksIRead,
-  ));
+  (rawBooks, ISBNsOfBooksIRead) =>
+    R.reduce(
+      addReadPropertyByISBN,
+      rawBooks,
+      ISBNsOfBooksIRead,
+    ),
+  );
+
+// export const getMyBooks = createSelector(
+//   [getRawBooks, getBooksRead],
+//   (rawBooks, booksRead) =>
+//     R.innerJoin(
+//       ({ ISBN: bookISBN }, { ISBN: readISBN }) => bookISBN === readISBN,
+//       rawBooks,
+//       booksRead,
+//     ),
+//   );
