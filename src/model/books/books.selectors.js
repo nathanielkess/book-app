@@ -4,8 +4,9 @@ import { getBooks as getRawBooks, getBooksRead } from './../raw-selectors';
 
 const addReadPropToObj = obj => ({ ...obj, isRead: true });
 
-const addReadPropertyByISBN = (books, ISBN) => {
+const addReadPropertyByISBN = (books, { ISBN }) => {
   const index = R.findIndex(R.propEq('ISBN', ISBN))(books);
+  if (index < 0) return books;
   return R.adjust(addReadPropToObj, index, books);
 };
 
