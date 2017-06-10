@@ -5,6 +5,7 @@ import Auth from './ui/containers/auth.container';
 import Users from './ui/containers/users.container';
 import Books from './ui/containers/books.container';
 import Search from './ui/containers/book-search.container';
+import MyBooks from './ui/containers/my-books.container';
 
 const App = () =>
   <div className="App">
@@ -16,9 +17,14 @@ const App = () =>
     <div className="mainContent">
       <Auth />
       <br />
+      <hr />
       <Users />
-      <br />
+      <hr />
       <Books />
+      <hr />
+      <p>Books that I read</p>
+      <MyBooks />
+
     </div>
   </div>;
 

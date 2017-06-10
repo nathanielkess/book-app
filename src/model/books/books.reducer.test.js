@@ -16,12 +16,19 @@ describe('Books reducer', () => {
 
 describe('BooksRead reducer', () => {
   it('should add to the list of books that Ive read', () => {
-    const payloadISBN = '123';
+    // const payloadISBN = '123';
+    const bookPayload = {
+      ISBN: '12345',
+      author: 'Bobby Sue',
+      coverImagePath: 'path/to/image.jpg',
+      title: 'Everybody poops',
+    };
+
     expect(booksRead([], {
       type: BOOKS.BOOKS_I_READ_CHANGED,
-      payload: payloadISBN,
+      payload: bookPayload,
     })).toEqual(
-      [payloadISBN],
+      [bookPayload],
     );
   });
 });
