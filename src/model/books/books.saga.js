@@ -5,10 +5,24 @@ import { database } from './../../api/firebase';
 import { getTheUser, getUid, getBookSearchTerm } from './../raw-selectors';
 import bookService from './books.service';
 import AUTH from './../auth/auth.types';
-import { onBooksIReadChanged, onFetchBooks } from './books.actions';
+import { onBooksIReadChanged, onFetchBooks, onBookNetworkDetailsRecieved } from './books.actions';
 
 const bookRef = database.ref('books');
 const userRef = database.ref('users');
+
+function *getUsersWhoRead(book) {
+  const userIDs = yield bookRef.child(`/${book.ISBN}/readBy`).once('value');
+  const arrUserIDs = Object.keys(userIDs.val());
+  let i = 0;
+  const users = [];
+
+  while (i < arrUserIDs.length) {
+    const user = yield userRef.child(arrUserIDs[i]).once('value');
+    users.push(user.val());
+    i += 1;
+  }
+  return users;
+}
 
 function *addNewbookReadByUser(book, { uid }) {
   const existingBook = yield bookRef.child(book.ISBN).once('value');
@@ -27,19 +41,24 @@ function *watchForIReadABook() {
   }
 }
 
-function* udpateStoreWhenBooksIReadAdded() {
+function *updateStoreWithBookIRead(book) {
+  const users = yield* getUsersWhoRead(book);
+  yield put(onBooksIReadChanged({ ...book, users }));
+}
+
+function* listenForBookIReadChannel() {
   const uid = yield select(getUid);
   const updateChannel = bookService.createBooksIveReadAddedEventChannel(uid);
   while (true) {
-    const newISBN = yield take(updateChannel);
-    yield put(onBooksIReadChanged(newISBN));
+    const book = yield take(updateChannel);
+    yield fork(updateStoreWithBookIRead, book);
   }
 }
 
-function* watchForBooksIReadAdded() {
+function *watchForBooksIReadAdded() {
   while (true) {
     yield take(AUTH.SUCCEEDED);
-    yield fork(udpateStoreWhenBooksIReadAdded);
+    yield fork(listenForBookIReadChannel);
   }
 }
 
@@ -73,10 +92,19 @@ function *watchForBookSearchAttempt() {
   }
 }
 
+export function *watchForBookNetworkSelected() {
+  while (true) {
+    const { payload: book } = yield take(BOOKS.NETWORK_SELECTED);
+    const users = yield* getUsersWhoRead(book);
+    yield put(onBookNetworkDetailsRecieved({ book, users }));
+  }
+}
+
 export function* startBookshWatchers() {
   yield [
     call(watchForIReadABook),
     call(watchForBooksIReadAdded),
     call(watchForBookSearchAttempt),
+    call(watchForBookNetworkSelected),
   ];
 }
