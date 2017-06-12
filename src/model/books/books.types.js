@@ -7,6 +7,8 @@ const BOOKS = prefixActionTypes('BOOKS', [
   'BOOKS_I_READ_FETCHED',
   'SEARCH_TERM_CHANGED',
   'SEARCH_ATTEMPTED',
+  'NETWORK_SELECTED',
+  'NETWORK_DETAILS_RECIEVED',
 ]);
 
 export default BOOKS;

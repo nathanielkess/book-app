@@ -31,7 +31,10 @@ img { max-width:100%; }
 .bookThumbnail { display:inline-block; vertical-align:top; width:60px; }
   .bookThumbnail > img { display: block; width:100%; }
 
-.booksReadList { list-style-type:none; display:inline-block; padding:0px; margin:0px; }
+.booksReadList { vertical-align:top; list-style-type:none; display:inline-block; padding:0px; margin:0px; }
   .booksReadList li { padding:5px; }
+  .booksReadList .readBy { vertical-align: top;  margin:0px; padding:0px; list-style-type:none; display:inline-block; font-size:9px; }
+
+  
 
 

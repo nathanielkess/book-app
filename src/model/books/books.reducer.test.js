@@ -1,5 +1,5 @@
 import bookData from './../../mock/books-data';
-import { books, booksRead } from './books.reducer';
+import { books, booksRead, bookNetworkDetails } from './books.reducer';
 import BOOKS from './books.types';
 
 describe('Books reducer', () => {
@@ -14,7 +14,7 @@ describe('Books reducer', () => {
   });
 });
 
-describe('BooksRead reducer', () => {
+describe('udpateStoreWhenBooksIReadAdded()', () => {
   it('should add to the list of books that Ive read', () => {
     // const payloadISBN = '123';
     const bookPayload = {
@@ -22,6 +22,15 @@ describe('BooksRead reducer', () => {
       author: 'Bobby Sue',
       coverImagePath: 'path/to/image.jpg',
       title: 'Everybody poops',
+      userThatReadThis: [
+        {
+          displayName: 'Nathaniel Kessler',
+          email: 'nathaniel.kessler@rangle.io',
+          isOnline: true,
+          photoURL: 'https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg',
+          uid: '8QdphXKQkaa9ML4bI7fexa2qO6W2',
+        },
+      ],
     };
 
     expect(booksRead([], {
@@ -30,5 +39,16 @@ describe('BooksRead reducer', () => {
     })).toEqual(
       [bookPayload],
     );
+  });
+});
+
+describe('bookNetwork reducer', () => {
+  it('should set a current book (to see its network details)', () => {
+    const payload = null;
+
+    expect(bookNetworkDetails(null, {
+      type: BOOKS.NETWORK_DETAILS_RECIEVED,
+      payload,
+    })).toEqual(null);
   });
 });

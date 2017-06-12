@@ -24,6 +24,7 @@ const App = () =>
       <hr />
       <p>Books that I read</p>
       <MyBooks />
+      <hr />
 
     </div>
   </div>;
