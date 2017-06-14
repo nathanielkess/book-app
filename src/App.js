@@ -6,6 +6,7 @@ import Users from './ui/containers/users.container';
 import Books from './ui/containers/books.container';
 import Search from './ui/containers/book-search.container';
 import MyBooks from './ui/containers/my-books.container';
+import ChatBox from './ui/components/chat-box';
 
 const App = () =>
   <div className="App">
@@ -24,6 +25,8 @@ const App = () =>
       <hr />
       <p>Books that I read</p>
       <MyBooks />
+      <hr />
+      <ChatBox />
       <hr />
 
     </div>

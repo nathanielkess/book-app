@@ -2,6 +2,7 @@
 *****************************************************/
 body { margin: 0;  padding: 0;  font-family: sans-serif;}
 img { max-width:100%; }
+* { box-sizing:border-box;}
 /*Layout
 *****************************************************/
 
@@ -36,5 +37,15 @@ img { max-width:100%; }
   .booksReadList .readBy { vertical-align: top;  margin:0px; padding:0px; list-style-type:none; display:inline-block; font-size:9px; }
 
   
+.chatBox { }
+  .chatBox header { font-size:18px; padding:10px 0px; }
+  .chatBox .messages { height:140px; overflow-y:scroll; box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75); }
+  .chatBox .container { padding:0px 10px;}
+  .chatBox .form { padding:10px 0px;}
+  .chatBox .form input[type="text"] { width:100%; padding:10px; }
+  .chatBox .form .button { width:100%; margin-top:5px;}
 
+.message { padding:10px; background-color:#ccc; margin:5px 5px; }  
+  .message.in { margin-right:40px; background-color:#75d7f4;}
+  .message.out { margin-left:40px;}
 
