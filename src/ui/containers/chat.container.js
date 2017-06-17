@@ -1,14 +1,21 @@
+import R from 'ramda';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose, renderNothing, branch } from 'recompose';
 import ChatBox from './../components/chat-box';
 import * as mapDispatchToProps from './../../model/chats/chats.actions';
-// import { createStructuredSelector } from 'reselect';
+import { getChat } from './../../model/raw-selectors';
 
-// const mapStateToProps = createStructuredSelector({
-//   books: getBooks,
-//   showAuthenticatedStuff: getAuthStatus,
-// });
+const mapStateToProps = createStructuredSelector({
+  chat: getChat,
+});
 
-export default connect(
-  null,
-  mapDispatchToProps,
+const showIfChatting = branch(
+  ({ chat }) => !R.prop(['with'], chat),
+  renderNothing,
+);
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  showIfChatting,
 )(ChatBox);
