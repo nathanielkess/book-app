@@ -1,8 +1,8 @@
-import { call, take, select, put, race } from 'redux-saga/effects';
+import { call, take, select, put, race, fork } from 'redux-saga/effects';
 import CHATS from './chats.types';
 import { database } from './../../api/firebase';
 import { getChatId, getUid } from './../raw-selectors';
-import { onSetChatId } from './chats.actions';
+import { onSetChatId, onMessageRecieved } from './chats.actions';
 import { createChatsRecievedEventChannel } from './chats.service';
 
 const chatsRef = database.ref('chats');
@@ -33,12 +33,11 @@ function *listenForChatsRecievedChannel() {
       message: take(updateChannel),
       stop: take(CHATS.CHATTING_WITH),
     });
-
     if (stop) {
       yield updateChannel.close();
       yield listenForChatsRecievedChannel();
     }
-    console.log('message is', message);
+    yield put(onMessageRecieved(message));
   }
 }
 
@@ -47,7 +46,7 @@ function *watchForStartingAChat() {
     const { payload: chattingWith } = yield take(CHATS.CHATTING_WITH);
     const chatId = yield fetchChatId(chattingWith.uid);
     yield put(onSetChatId(chatId));
-    yield call(listenForChatsRecievedChannel);
+    yield fork(listenForChatsRecievedChannel);
   }
 }
 

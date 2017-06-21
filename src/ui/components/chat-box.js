@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from './button';
+import ChatMessages from './chat-messages';
 
 class ChatBox extends React.Component {
 
@@ -33,26 +34,7 @@ class ChatBox extends React.Component {
         Chatting with { this.props.chattingWith.displayName }
       </header>
       <div className="messages">
-        <div className="container">
-          <div className="message in">
-            hey!
-          </div>
-          <div className="message out">
-            hey!
-          </div>
-          <div className="message in">
-            hey!
-          </div>
-          <div className="message out">
-            hey!
-          </div>
-          <div className="message in">
-            hey!
-          </div>
-          <div className="message out">
-            hey!
-          </div>
-        </div>
+        <ChatMessages myUid={this.props.myUid} messages={this.props.messages} />
       </div>
       <div className="form">
         <input
@@ -69,6 +51,8 @@ class ChatBox extends React.Component {
 ChatBox.propTypes = {
   onSendMessage: PropTypes.func,
   chattingWith: PropTypes.object,
+  messages: PropTypes.array,
+  myUid: PropTypes.string,
 };
 
 export default ChatBox;

@@ -27,4 +27,18 @@ describe('Chats reducer', () => {
       chatId: payLoadItem,
     });
   });
+
+  it('should add a message', () => {
+    const payload = 'hey man';
+    expect(chat(chatInitState, {
+      type: CHATS.RECIEVED_MESSAGE,
+      payload,
+    })).toEqual({
+      ...chatInitState,
+      messages: [
+        ...chatInitState.messages,
+        payload,
+      ],
+    });
+  });
 });
