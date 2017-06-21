@@ -16,4 +16,15 @@ describe('Chats reducer', () => {
       with: { ...payLoadItem },
     });
   });
+
+  it('should set the chat id', () => {
+    const payLoadItem = '123456';
+    expect(chat(chatInitState, {
+      type: CHATS.RECIEVED_CHAT_ID,
+      payload: payLoadItem,
+    })).toEqual({
+      ...chatInitState,
+      chatId: payLoadItem,
+    });
+  });
 });

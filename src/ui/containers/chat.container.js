@@ -4,14 +4,14 @@ import { createStructuredSelector } from 'reselect';
 import { compose, renderNothing, branch } from 'recompose';
 import ChatBox from './../components/chat-box';
 import * as mapDispatchToProps from './../../model/chats/chats.actions';
-import { getChat } from './../../model/raw-selectors';
+import { getChattingWith } from './../../model/raw-selectors';
 
 const mapStateToProps = createStructuredSelector({
-  chat: getChat,
+  chattingWith: getChattingWith,
 });
 
 const showIfChatting = branch(
-  ({ chat }) => !R.prop(['with'], chat),
+  ({ chattingWith }) => !R.path(['displayName'], chattingWith),
   renderNothing,
 );
 

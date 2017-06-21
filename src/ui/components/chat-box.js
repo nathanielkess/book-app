@@ -30,7 +30,7 @@ class ChatBox extends React.Component {
   render() {
     return (<div className="chatBox">
       <header>
-        Chatting with Nathaniel
+        Chatting with { this.props.chattingWith.displayName }
       </header>
       <div className="messages">
         <div className="container">
@@ -68,6 +68,7 @@ class ChatBox extends React.Component {
 
 ChatBox.propTypes = {
   onSendMessage: PropTypes.func,
+  chattingWith: PropTypes.object,
 };
 
 export default ChatBox;
