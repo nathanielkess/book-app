@@ -2,19 +2,27 @@ import React from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import BookThumb from './../components/book-thumb';
+import Button from './../components/button';
 import { getBooksRead, getUid } from './../../model/raw-selectors';
-import * as mapDistpatchToProps from './../../model/books/books.actions';
+import * as bookDispatchers from './../../model/books/books.actions';
+import * as chatsDispatchers from './../../model/chats/chats.actions';
 
 const mapStateToProps = createStructuredSelector({
   books: getBooksRead,
   currentUserId: getUid,
 });
 
-export default connect(mapStateToProps, mapDistpatchToProps)(
+const dispatchers = {
+  ...bookDispatchers,
+  ...chatsDispatchers,
+};
+
+export default connect(mapStateToProps, dispatchers)(
   ({
     currentUserId,
     books,
     onSelectBookNetwork,
+    onStartChat,
    }) =>
      <ul className="booksReadList">
        { books.map(book =>
@@ -33,7 +41,9 @@ export default connect(mapStateToProps, mapDistpatchToProps)(
               .filter(user => user.uid !== currentUserId)
               .map(user =>
                 <li key={user.uid}>
-                  { user.displayName }
+                  <Button onClick={() => { onStartChat(user); }}>
+                    { user.displayName }
+                  </Button>
                 </li>,
               )}
            </ul>

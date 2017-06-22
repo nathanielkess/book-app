@@ -6,6 +6,7 @@ import auth from './model/auth/auth.reducer';
 import users from './model/users/users.reducer';
 import { books, booksRead, booksSearch, bookNetworkDetails } from './model/books/books.reducer';
 // import { search } from './model/book-search/book-search.reducer';
+import { chat } from './model/chats/chats.reducer';
 
 const logger = createLogger({
   collapsed: true,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   booksRead,
   booksSearch,
   bookNetworkDetails,
+  chat,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

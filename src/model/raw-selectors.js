@@ -17,3 +17,8 @@ export const getBooksRead = R.prop('booksRead');
 
 // Book Search
 export const getBookSearchTerm = R.prop('booksSearch');
+
+// Chats
+export const getChattingWith = R.path(['chat', 'with']);
+export const getChatId = R.path(['chat', 'chatId']);
+export const getMessage = R.path(['chat', 'messages']);
